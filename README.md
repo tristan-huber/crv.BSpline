@@ -6,7 +6,8 @@
 
 ## Inputs
 
-- **Input** (number)
+- **Points** (geometry)
+- **close** (boolean)
 
 
 

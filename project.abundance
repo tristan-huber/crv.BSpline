@@ -6,8 +6,8 @@
   "name": "crv.BSpline",
   "ioValues": [
     {
-      "name": "Input",
-      "ioValue": 10
+      "name": "Points",
+      "ioValue": "__GEOMETRY_INPUT__"
     }
   ],
   "topLevel": true,
@@ -36,14 +36,24 @@
         }
       ],
       "interpreterVersion": 1,
-      "code": "\nfunction run(points: Assembly) {\n  if (!points) {\n    throw new Error(\"Missing required input - assembly of Points\")\n  }\n  const p: [number, number, number][] = []\n  points.onLeafs((l) => {\n    if (l.isPoint()) {\n      p.push(l.geometry.asTuple())\n    }\n    else throw new Error(\"Requires an assembly of Points, received: \" + l.geometry.constructor.name)\n    return l;\n  })\n\n  return replicad.assembleWire([replicad.makeBSplineApproximation(p, {\n    degMax: 3,\n    degMin: 3,\n    tolerance: 0.0001,\n  })])\n}",
-      "compiledCode": "\"use strict\";\nfunction run(points) {\n    if (!points) {\n        throw new Error(\"Missing required input - assembly of Points\");\n    }\n    const p = [];\n    points.onLeafs((l) => {\n        if (l.isPoint()) {\n            p.push(l.geometry.asTuple());\n        }\n        else\n            throw new Error(\"Requires an assembly of Points, received: \" + l.geometry.constructor.name);\n        return l;\n    });\n    return replicad.assembleWire([replicad.makeBSplineApproximation(p, {\n            degMax: 3,\n            degMin: 3,\n            tolerance: 0.0001,\n        })]);\n}\n"
+      "code": "\nfunction run(points: Assembly, close: boolean = false) {\n  if (!points) {\n    throw new Error(\"Missing required input - assembly of Points\")\n  }\n  const p: [number, number, number][] = []\n  points.onLeafs((l) => {\n    if (l.isPoint()) {\n      p.push(l.geometry.asTuple())\n    }\n    else throw new Error(\"Requires an assembly of Points, received: \" + l.geometry.constructor.name)\n    return l;\n  })\n  if (close) {\n    p.push(p[0])\n  }\n\n  return replicad.assembleWire([replicad.makeBSplineApproximation(p, {\n    degMax: 3,\n    degMin: 3,\n    tolerance: 0.0001,\n  })])\n}",
+      "compiledCode": "\"use strict\";\nfunction run(points, close = false) {\n    if (!points) {\n        throw new Error(\"Missing required input - assembly of Points\");\n    }\n    const p = [];\n    points.onLeafs((l) => {\n        if (l.isPoint()) {\n            p.push(l.geometry.asTuple());\n        }\n        else\n            throw new Error(\"Requires an assembly of Points, received: \" + l.geometry.constructor.name);\n        return l;\n    });\n    if (close) {\n        p.push(p[0]);\n    }\n    return replicad.assembleWire([replicad.makeBSplineApproximation(p, {\n            degMax: 3,\n            degMin: 3,\n            tolerance: 0.0001,\n        })]);\n}\n"
     },
     {
       "atomType": "Input",
       "x": 0.025384615384615384,
       "y": 0.15384615384615385,
-      "uniqueID": "id-1410"
+      "uniqueID": "id-1410",
+      "name": "Points",
+      "type": "geometry"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.4971428571428571,
+      "uniqueID": "id-1419",
+      "name": "close",
+      "type": "boolean"
     }
   ],
   "allConnectors": [
@@ -55,6 +65,11 @@
     {
       "ap2Name": "points",
       "ap1ID": "id-1410",
+      "ap2ID": "id-1405"
+    },
+    {
+      "ap2Name": "close",
+      "ap1ID": "id-1419",
       "ap2ID": "id-1405"
     }
   ],
