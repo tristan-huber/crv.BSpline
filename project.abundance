@@ -8,6 +8,10 @@
     {
       "name": "Points",
       "ioValue": "__GEOMETRY_INPUT__"
+    },
+    {
+      "name": "close",
+      "ioValue": 10
     }
   ],
   "topLevel": true,
@@ -33,6 +37,10 @@
         {
           "name": "points",
           "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "close",
+          "ioValue": 10
         }
       ],
       "interpreterVersion": 1,
@@ -50,7 +58,7 @@
     {
       "atomType": "Input",
       "x": 0.025384615384615384,
-      "y": 0.4971428571428571,
+      "y": 0.24615384615384617,
       "uniqueID": "id-1419",
       "name": "close",
       "type": "boolean"
